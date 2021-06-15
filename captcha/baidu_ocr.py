@@ -5,7 +5,7 @@ import time
 
 from PIL import ImageGrab
 from aip import AipOcr
-
+from utils.config import get_file
 sms_code = ""
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
@@ -38,7 +38,7 @@ class BaiduOCR(object):
 
         # 确定验证码的左上角和右下角坐标
         code_pic = ImageGrab.grab(_range)
-        code_pic.save(name)
+        code_pic.save(get_file(name))
         return code_pic
 
     def baidu_ocr(self, _range, delay_time=5):

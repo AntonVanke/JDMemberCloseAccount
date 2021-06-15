@@ -5,6 +5,7 @@ import time
 import easyocr
 
 from PIL import ImageGrab
+from utils.config import get_file
 
 sms_code = ""
 sys.path.append(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
@@ -30,7 +31,8 @@ class EasyOCR(object):
 
         # 确定验证码的左上角和右下角坐标
         code_pic = ImageGrab.grab(_range)
-        code_pic.save(name)
+        code_pic.save(get_file(name))
+
         return code_pic
 
     def easy_ocr(self, _range, delay_time=5):

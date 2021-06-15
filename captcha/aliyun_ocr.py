@@ -5,7 +5,7 @@ import json
 import re
 import time
 import requests
-
+from utils.config import get_file
 from PIL import ImageGrab
 
 sms_code = ""
@@ -39,7 +39,7 @@ class AliYunOCR(object):
 
         # 确定验证码的左上角和右下角坐标
         code_pic = ImageGrab.grab(_range)
-        code_pic.save(name)
+        code_pic.save(get_file(name))
         return code_pic
 
     def post_url(self, img):

@@ -2,9 +2,12 @@ import os
 import time
 import logging
 from logging import handlers
+from utils.config import get_file
 
 
 # 单例
+
+
 def singleton(cls):
     _instance = {}
 
@@ -24,8 +27,7 @@ class Log(object):
 
     def __init__(self):
         self.logger = logging.getLogger("")
-
-        logs_dir = "logs"
+        logs_dir = get_file("logs")
         if not os.path.exists(logs_dir):
             os.mkdir(logs_dir)
 

@@ -4,6 +4,7 @@ import sys
 from utils.config import get_file
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
+from traceback import format_exc
 
 
 def get_browser(_config):
@@ -87,4 +88,4 @@ def get_browser(_config):
         return _browser
     except WebDriverException:
         # 驱动问题
-        print("ERROR", "浏览器错误", "请检查你下载并解压好的驱动是否放在drivers目录下")
+        print("ERROR", "浏览器错误", "请检查你下载并解压好的驱动是否放在drivers目录下", format_exc)

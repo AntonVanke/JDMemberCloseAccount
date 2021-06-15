@@ -1,17 +1,16 @@
 import sys
 import time
 import json
-import asyncio
 import requests
 import urllib3
 
 from PIL import Image
-from websockets import connect
 from captcha.chaojiying import ChaoJiYing
 from captcha.tujian import TuJian
 from captcha.jd_captcha import JDcaptcha_base64
 from utils.logger import Log
 from utils.config import get_config
+from utils.config import get_file
 from utils.selenium_browser import get_browser
 from utils.listener import listener
 from selenium.webdriver import ActionChains
@@ -20,16 +19,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
 
-# async def ws_conn(ws_conn_url):
-#     """
-#     websocket连接
-#     """
-#     async with connect(ws_conn_url) as websocket:
-#         try:
-#             recv = await asyncio.wait_for(websocket.recv(), get_config()["sms_captcha"]["ws_timeout"])
-#             return recv
-#         except asyncio.TimeoutError:
-#             return ""
 
 
 logger = Log().logger
@@ -116,7 +105,7 @@ class JDMemberCloseAccount(object):
         # 图片根据窗口大小resize，避免高分辨率影响坐标
         i = Image.open(name)
         new_picture = i.resize((width, height))
-        new_picture.save(name)
+        new_picture.save(get_file(name))
 
         # 剪裁图形验证码区域
         code_pic = new_picture.crop(_range)
@@ -380,7 +369,7 @@ class JDMemberCloseAccount(object):
                     def auto_identify_captcha_click():
                         # 分割图形验证码
                         code_img = self.get_code_pic()
-                        img = open('code_pic.png', 'rb').read()
+                        img = open(get_file('code_pic.png'), 'rb').read()
 
                         pic_str, pic_id = "", ""
                         if self.image_captcha_cfg["type"] == "cjy":
